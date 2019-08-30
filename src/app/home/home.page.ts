@@ -27,4 +27,8 @@ export class HomePage implements OnInit {
       this.navCtrl.navigateRoot("/");
   }
 
+  eventos(){
+    this.navCtrl.navigateForward("/eventos");
+  }
+
 }
