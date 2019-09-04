@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { EventoService } from '../services/evento/evento.service';
+
+
 
 @Component({
   selector: 'app-eventos',
@@ -13,9 +16,12 @@ export class EventosPage implements OnInit {
     {nome:"Git",descricao:"Git Hub no mercado 3"}
   ];
 
-  constructor() { }
+  constructor(private eventoService:EventoService) { }
 
   ngOnInit() {
+    this.eventoService.eventos().subscribe((dados: any)=>{
+      this.dados = dados;
+    });
   }
 
 }
