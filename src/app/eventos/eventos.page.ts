@@ -10,11 +10,7 @@ import { EventoService } from '../services/evento/evento.service';
 })
 export class EventosPage implements OnInit {
 
-  dados=[
-    {nome:"Git",descricao:"Git Hub no mercado"},
-    {nome:"Git",descricao:"Git Hub no mercado 2"},
-    {nome:"Git",descricao:"Git Hub no mercado 3"}
-  ];
+  dados=[];
 
   constructor(private eventoService:EventoService) { }
 

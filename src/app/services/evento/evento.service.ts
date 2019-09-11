@@ -11,6 +11,6 @@ export class EventoService {
   constructor(private http: HttpClient) { }
 
   eventos() {
-    return this.http.get(this.url + "/obj_eventos.php");
+    return this.http.get(this.url + "/obj_evento.php");
   }
 }
