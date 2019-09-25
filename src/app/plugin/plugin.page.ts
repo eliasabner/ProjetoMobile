@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 
 
 @Component({
@@ -8,15 +10,17 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
   styleUrls: ['./plugin.page.scss'],
 })
 export class PluginPage implements OnInit {
-  base64Image = [];
-  constructor(private camera: Camera) { }
+  base64Image: string [];
+  localiza = {longitude:0,latitude:0};
+  constructor(private camera: Camera, private geolocation:Geolocation) { }
 
   ngOnInit() {
+   //this.localizacao()
   }
   
   tirarFoto(){
     const options: CameraOptions = {
-      quality: 100,
+      quality: 60,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
@@ -33,7 +37,17 @@ export class PluginPage implements OnInit {
     });
   }
   localizacao(){
+    this.geolocation.getCurrentPosition().then((resp) => {
+      //alert("Lat "+resp.coords.latitude);
+      //alert("Lon "+resp.coords.longitude);
+      // resp.coords.latitude
+      // resp.coords.longitude
+    this.localiza.latitude=resp.coords.latitude;
+    this.localiza.longitude=resp.coords.longitude;
 
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
   }
 
 
