@@ -1,21 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit,ViewChild,ElementRef } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
-
+declare var google;
 
 @Component({
   selector: 'app-plugin',
   templateUrl: './plugin.page.html',
   styleUrls: ['./plugin.page.scss'],
 })
-export class PluginPage implements OnInit {
+export class PluginPage implements OnInit,AfterViewInit {
+  @ViewChild("googleMaps",{static: false}) elementRef:ElementRef;
+
   base64Image: string [];
   localiza = {longitude:0,latitude:0};
   constructor(private camera: Camera, private geolocation:Geolocation) { }
 
   ngOnInit() {
    //this.localizacao()
+  }
+  ngAfterViewInit(){
+    let refMap = this.elementRef.nativeElement;
+    
+    this.geolocation.getCurrentPosition().then((resp) => {
+      // resp.coords.latitude
+      // resp.coords.longitude
+
+      let meuLocal = {lat: resp.coords.latitude, lng: resp.coords.longitude};
+
+      const map = new google.maps.Map(refMap, {
+        center: meuLocal,
+        zoom: 16
+      });
+
+      var marker = new google.maps.Marker({position: meuLocal,map:map});
+
+     }).catch((error) => {
+       console.log('Error getting location', error)});
   }
   
   tirarFoto(){
